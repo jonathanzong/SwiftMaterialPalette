@@ -10,6 +10,12 @@
 		F428A2181BE3F8F700238624 /* MaterialPalette.h in Headers */ = {isa = PBXBuildFile; fileRef = F428A2171BE3F8F700238624 /* MaterialPalette.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F428A21E1BE3F8F700238624 /* MaterialPalette.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F428A2121BE3F8F700238624 /* MaterialPalette.framework */; };
 		F428A2251BE3F8F700238624 /* MaterialPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A2241BE3F8F700238624 /* MaterialPaletteTests.swift */; };
+		F428A2301BE3FB0E00238624 /* ColorCutQuantizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A22F1BE3FB0E00238624 /* ColorCutQuantizer.swift */; };
+		F428A2321BE3FC4700238624 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A2311BE3FC4700238624 /* Palette.swift */; };
+		F428A2341BE405C200238624 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A2331BE405C200238624 /* ColorUtils.swift */; };
+		F428A2361BE459FC00238624 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A2351BE459FC00238624 /* UIImageExtension.swift */; };
+		F428A2381BE5537300238624 /* SwiftPriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A2371BE5537300238624 /* SwiftPriorityQueue.swift */; };
+		F428A23C1BE5623B00238624 /* DefaultGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F428A23B1BE5623B00238624 /* DefaultGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +35,12 @@
 		F428A21D1BE3F8F700238624 /* MaterialPaletteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaterialPaletteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F428A2231BE3F8F700238624 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F428A2241BE3F8F700238624 /* MaterialPaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialPaletteTests.swift; sourceTree = "<group>"; };
+		F428A22F1BE3FB0E00238624 /* ColorCutQuantizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCutQuantizer.swift; sourceTree = "<group>"; };
+		F428A2311BE3FC4700238624 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		F428A2331BE405C200238624 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		F428A2351BE459FC00238624 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		F428A2371BE5537300238624 /* SwiftPriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftPriorityQueue.swift; sourceTree = "<group>"; };
+		F428A23B1BE5623B00238624 /* DefaultGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +83,7 @@
 		F428A2141BE3F8F700238624 /* MaterialPalette */ = {
 			isa = PBXGroup;
 			children = (
+				F428A22E1BE3F99700238624 /* Palette */,
 				F428A2171BE3F8F700238624 /* MaterialPalette.h */,
 				F428A2151BE3F8F700238624 /* Supporting Files */,
 			);
@@ -100,6 +113,19 @@
 				F428A2231BE3F8F700238624 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F428A22E1BE3F99700238624 /* Palette */ = {
+			isa = PBXGroup;
+			children = (
+				F428A22F1BE3FB0E00238624 /* ColorCutQuantizer.swift */,
+				F428A2311BE3FC4700238624 /* Palette.swift */,
+				F428A2331BE405C200238624 /* ColorUtils.swift */,
+				F428A2351BE459FC00238624 /* UIImageExtension.swift */,
+				F428A2371BE5537300238624 /* SwiftPriorityQueue.swift */,
+				F428A23B1BE5623B00238624 /* DefaultGenerator.swift */,
+			);
+			name = Palette;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +235,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F428A2341BE405C200238624 /* ColorUtils.swift in Sources */,
+				F428A2301BE3FB0E00238624 /* ColorCutQuantizer.swift in Sources */,
+				F428A2321BE3FC4700238624 /* Palette.swift in Sources */,
+				F428A2361BE459FC00238624 /* UIImageExtension.swift in Sources */,
+				F428A2381BE5537300238624 /* SwiftPriorityQueue.swift in Sources */,
+				F428A23C1BE5623B00238624 /* DefaultGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +355,7 @@
 		F428A2291BE3F8F700238624 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -332,12 +365,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		F428A22A1BE3F8F700238624 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

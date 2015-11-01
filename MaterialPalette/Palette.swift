@@ -8,20 +8,20 @@
 
 import Foundation
 
-class Palette {
+public class Palette {
     
     private let DEFAULT_RESIZE_BITMAP_MAX_DIMENSION = 192
     private let DEFAULT_CALCULATE_NUMBER_COLORS = 16
     
-    let swatches: [Swatch]
+    public let swatches: [Swatch]
     let generator: DefaultGenerator
     
-    init(bitmap: UIImage) {
+    public init(uiImage: UIImage) {
         
         // We have a Bitmap so we need to quantization to reduce the number of colors
         
         // First we'll scale down the bitmap so it's largest dimension is as specified
-        let scaledBitmap: UIImage = Palette.scaleBitmapDown(bitmap, targetMaxDimension: DEFAULT_RESIZE_BITMAP_MAX_DIMENSION)
+        let scaledBitmap: UIImage = Palette.scaleBitmapDown(uiImage, targetMaxDimension: DEFAULT_RESIZE_BITMAP_MAX_DIMENSION)
         
         let quantizer = ColorCutQuantizer(bitmap: scaledBitmap, maxColors: DEFAULT_CALCULATE_NUMBER_COLORS)
         
@@ -34,6 +34,30 @@ class Palette {
         
         // Now call let the Generator do it's thing
         generator.generate(swatches)
+    }
+    
+    public func getVibrantSwatch() -> Swatch? {
+        return generator.vibrantSwatch
+    }
+    
+    public func getMutedSwatch() -> Swatch? {
+        return generator.mutedSwatch
+    }
+    
+    public func getLightVibrantSwatch() -> Swatch? {
+        return generator.lightVibrantSwatch
+    }
+    
+    public func getLightMutedSwatch() -> Swatch? {
+        return generator.lightMutedSwatch
+    }
+    
+    public func getDarkVibrantSwatch() -> Swatch? {
+        return generator.darkVibrantSwatch
+    }
+    
+    public func getDarkMutedSwatch() -> Swatch? {
+        return generator.darkMutedSwatch
     }
     
     private static func scaleBitmapDown(bitmap: UIImage, targetMaxDimension: Int) -> UIImage {
@@ -64,16 +88,16 @@ class Palette {
         return scaledImage
     }
     
-    struct Swatch: Equatable {
+    public struct Swatch: Equatable, Printable {
         
         private static let MIN_CONTRAST_TITLE_TEXT: Float = 3.0
         private static let MIN_CONTRAST_BODY_TEXT: Float = 4.5
         
-        let color: UIColor
-        let population: Int
+        public let color: UIColor
+        public let population: Int
         
-        let titleTextColor: UIColor?
-        let bodyTextColor: UIColor?
+        public let titleTextColor: UIColor?
+        public let bodyTextColor: UIColor?
         
         init(color: UIColor, population: Int) {
             self.color = color
@@ -82,6 +106,11 @@ class Palette {
             let textColors = Swatch.generateTextColors(rgb)
             self.titleTextColor = textColors[0]
             self.bodyTextColor = textColors[1]
+        }
+        
+        public var description: String {
+            let hexcolor = String((color.rgb() ?? -1), radix: 16)
+            return "Color: \(hexcolor) Population: \(population)"
         }
         
         private static func generateTextColors(maybeRgb: Int?) -> [UIColor?] {
@@ -119,8 +148,8 @@ class Palette {
     }
 }
 
-func == (lhs: Palette.Swatch, rhs: Palette.Swatch) -> Bool {
-    return lhs.color == rhs.color
+public func == (lhs: Palette.Swatch, rhs: Palette.Swatch) -> Bool {
+    return lhs.color == rhs.color && lhs.population == rhs.population
 }
 
 extension UIColor {

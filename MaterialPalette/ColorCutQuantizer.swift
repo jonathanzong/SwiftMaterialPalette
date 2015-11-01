@@ -45,7 +45,7 @@ class ColorCutQuantizer {
         // Now let's count the number of distinct colors
         let distinctColorCount = histogram.count
         
-        colors = Array(histogram.keys)
+        self.colors = Array(histogram.keys)
         
         if (distinctColorCount <= maxColors) {
             // The image has fewer colors than the maximum requested, so just return the colors
@@ -68,7 +68,7 @@ class ColorCutQuantizer {
         
         // Now go through the boxes, splitting them until we have reached maxColors or there are no
         // more boxes to split
-        splitBoxes(pq, maxSize: maxColors);
+        pq = splitBoxes(pq, maxSize: maxColors)
         
         // Finally, return the average colors of the color boxes
         return generateAverageColors(pq)
@@ -83,7 +83,7 @@ class ColorCutQuantizer {
     * @param queue {@link java.util.PriorityQueue} to poll for boxes
     * @param maxSize Maximum amount of boxes to split
     */
-    private func splitBoxes(var queue: PriorityQueue<Vbox>, maxSize: Int) {
+    private func splitBoxes(var queue: PriorityQueue<Vbox>, maxSize: Int) -> PriorityQueue<Vbox> {
         while (queue.count < maxSize) {
             if let vbox = queue.pop() {
                 if (vbox.canSplit()) {
@@ -93,13 +93,14 @@ class ColorCutQuantizer {
                     // Then offer the box back
                     queue.push(vbox)
                 } else {
-                    return
+                    return queue
                 }
             } else {
                 // If we get here then there are no more boxes to split, so return
-                return
+                return queue
             }
         }
+        return queue
     }
     
     private func generateAverageColors(vboxes: PriorityQueue<Vbox>) -> [Palette.Swatch] {
@@ -213,8 +214,7 @@ class ColorCutQuantizer {
             assert(canSplit())
         
             // find median along the longest dimension
-            let splitPoint = findSplitPoint();
-            
+            let splitPoint = findSplitPoint()
             let newBox = Vbox(lowerIndex: splitPoint + 1, upperIndex: self.upperIndex, colors: colors, histogram: histogram)
             
             // Now change this box's upperIndex and recompute the color boundaries
@@ -258,12 +258,14 @@ class ColorCutQuantizer {
             // its most significant is the desired dimension
             ColorCutQuantizer.modifySignificantOctet(colors, dimension: longestDimension, lower: lowerIndex, upper: upperIndex)
             
-            colors = sorted(colors[lowerIndex...upperIndex + 1], { (left: Int, right: Int) -> Bool in left < right })
+            colors = colors[0..<lowerIndex] +
+                sorted(colors[lowerIndex...upperIndex], { (left: Int, right: Int) -> Bool in left < right }) +
+                colors[(upperIndex+1)..<colors.count]
             
             // Now revert all of the colors so that they are packed as RGB again
             ColorCutQuantizer.modifySignificantOctet(colors, dimension: longestDimension, lower: lowerIndex, upper: upperIndex)
             
-            let midPoint = population / 2;
+            let midPoint: Int = population / 2
             for (var i = lowerIndex, count = 0; i <= upperIndex; i++)  {
                 count += histogram[colors[i]]!
                 if (count >= midPoint) {
@@ -362,7 +364,7 @@ class ColorCutQuantizer {
                 let color = a[i]
                 a[i] = quantizedGreen(color) << (QUANTIZE_WORD_WIDTH + QUANTIZE_WORD_WIDTH)
                 | quantizedRed(color) << QUANTIZE_WORD_WIDTH
-                | quantizedBlue(color)
+                    | quantizedBlue(color)
             }
             break;
             case Dimension.COMPONENT_BLUE:
@@ -388,10 +390,10 @@ class ColorCutQuantizer {
 }
 
 /**
-* Comparator which sorts {@link Vbox} instances based on their volume, in descending order
+* Comparator which sorts {@link Vbox} instances based on their volume, in descending order (largest first)
 */
 func < (lhs: ColorCutQuantizer.Vbox, rhs: ColorCutQuantizer.Vbox) -> Bool {
-    return rhs.getVolume() - lhs.getVolume() < 0
+    return rhs.getVolume() - lhs.getVolume() > 0
 }
 
 func == (lhs: ColorCutQuantizer.Vbox, rhs: ColorCutQuantizer.Vbox) -> Bool {

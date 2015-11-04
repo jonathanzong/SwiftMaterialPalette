@@ -115,8 +115,8 @@ public class Palette {
         
         private static func generateTextColors(maybeRgb: Int?) -> [UIColor?] {
             if let rgb = maybeRgb {
-                let maybeLightTitleAlpha = ColorUtils.calculateMinimumAlpha(0xffffffff, background: rgb, minContrastRatio: MIN_CONTRAST_TITLE_TEXT)
-                let maybeLightBodyAlpha = ColorUtils.calculateMinimumAlpha(0xffffffff, background: rgb, minContrastRatio: MIN_CONTRAST_BODY_TEXT)
+                let maybeLightTitleAlpha = ColorUtils.calculateMinimumAlpha(0xffffff, background: rgb, minContrastRatio: MIN_CONTRAST_TITLE_TEXT)
+                let maybeLightBodyAlpha = ColorUtils.calculateMinimumAlpha(0xffffff, background: rgb, minContrastRatio: MIN_CONTRAST_BODY_TEXT)
                 if let lightTitleAlpha = maybeLightTitleAlpha,
                        lightBodyAlpha = maybeLightBodyAlpha {
                     return [UIColor.whiteColor().colorWithAlphaComponent(CGFloat(lightTitleAlpha)/255.0),

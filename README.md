@@ -34,7 +34,7 @@ $ pod install
 
 ##Usage
 
-```
+```swift
 let palette = Palette(uiImage: image)
             
 let maybeSwatches = [

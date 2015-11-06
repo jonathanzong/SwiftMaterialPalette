@@ -88,7 +88,7 @@ public class Palette {
         return scaledImage
     }
     
-    public struct Swatch: Equatable, Printable {
+    public struct Swatch: Equatable, CustomStringConvertible {
         
         private static let MIN_CONTRAST_TITLE_TEXT: Float = 3.0
         private static let MIN_CONTRAST_BODY_TEXT: Float = 4.5
@@ -129,7 +129,6 @@ public class Palette {
                     return [UIColor.blackColor().colorWithAlphaComponent(CGFloat(darkTitleAlpha)/255.0),
                         UIColor.blackColor().colorWithAlphaComponent(CGFloat(darkBodyAlpha)/255.0)]
                 }
-                let ret = []
                 // if we reach here, we need to use mismatched light/dark
                 if let darkTitleAlpha = maybeDarkTitleAlpha,
                        lightBodyAlpha = maybeLightBodyAlpha {

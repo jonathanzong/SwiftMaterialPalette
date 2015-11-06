@@ -54,7 +54,7 @@ class ColorCutQuantizer {
             }
         } else {
             // We need use quantization to reduce the number of colors
-            self.quantizedColors.extend(quantizePixels(maxColors))
+            self.quantizedColors.appendContentsOf(quantizePixels(maxColors))
         }
     }
     
@@ -259,7 +259,7 @@ class ColorCutQuantizer {
             ColorCutQuantizer.modifySignificantOctet(colors, dimension: longestDimension, lower: lowerIndex, upper: upperIndex)
             
             colors = colors[0..<lowerIndex] +
-                sorted(colors[lowerIndex...upperIndex], { (left: Int, right: Int) -> Bool in left < right }) +
+                colors[lowerIndex...upperIndex].sort(<) +
                 colors[(upperIndex+1)..<colors.count]
             
             // Now revert all of the colors so that they are packed as RGB again
@@ -403,15 +403,15 @@ func == (lhs: ColorCutQuantizer.Vbox, rhs: ColorCutQuantizer.Vbox) -> Bool {
 extension CGImage {
     func getPixelColor(pos: CGPoint) -> UIColor {
         
-        var pixelData = CGDataProviderCopyData(CGImageGetDataProvider(self))
-        var data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(self))
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
-        var pixelInfo: Int = ((CGImageGetWidth(self) * Int(pos.y)) + Int(pos.x)) * 4
+        let pixelInfo: Int = ((CGImageGetWidth(self) * Int(pos.y)) + Int(pos.x)) * 4
         
-        var r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-        var g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
-        var b = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
-        var a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
+        let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
+        let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
+        let b = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
+        let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
         
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
